@@ -8,29 +8,12 @@
 #include <iostream>
 #include <string>
 
-/*
-class Baseline
-{
-public:
-	Baseline() {};
-	~Baseline() {};
-	void printText()
-	{
-
-		std::cout << menu_text << std::endl;
-
-	}
-
-	std::string menu_text;
-
-};
-*/
-
-
 class MainMenu
 {
-private:
-	std::string menu_text = std::string()
+	~MainMenu() { std::cout << "Destructing..."; };
+
+public:
+	const std::string menu_text = std::string()
 		+ "Main Menu\n"
 		+ "1. Monday\n"
 		+ "2. Tuesday\n"
@@ -39,6 +22,7 @@ private:
 		+ "5. Friday\n"
 		+ "6. Saturday\n"
 		+ "7. Sunday\n"
+		+ "0. Exit\n"
 		+ "Selection: ";
 
 	const std::string monday = std::string()
@@ -82,19 +66,28 @@ private:
 		+ "5. Back\n"
 		+ "Selection: ";
 
+	const std::string sunday = std::string()
+		+ "Task List\n"
+		+ "1. Wash Oliver's clothes\n"
+		+ "2. Fold Oliver's clothes\n"
+		+ "3. Change sheets\n"
+		+ "4. Eyebrows\n"
+		+ "5. Shave legs\n"
+		+ "6. Face mask\n"
+		+ "7. Cut nails\n"
+		+ "Selection: ";
 
-public:
-	MainMenu(void) {};
-	~MainMenu(void) {};
-	void printText(void)
+	bool alive = true;
+
+	int printText(void)
 	{
-	
+		int selection;
+
 		std::cout << menu_text;
 		std::cin >> selection;
-	
+		
+		return selection;
 	}
-
-	int selection;
 
 	void task_list(int selection)
 	{
@@ -102,12 +95,32 @@ public:
 		switch (selection)
 		{
 			case(1):
+				std::cout << monday;
+				break;
 			case(2):
+				std::cout << tuesday;
+				break;
 			case(3):
+				std::cout << wednesday;
+				break;
 			case(4):
+				std::cout << thursday;
+				break;
 			case(5):
+				std::cout << friday;
+				break;
 			case(6):
+				std::cout << saturday;
+				break;
 			case(7):
+				std::cout << sunday;
+				break;
+			case(0):
+			{
+				alive == false;
+				std::cout << "Goodbye." << std::endl;
+				break;
+			}
 		}
 	}
 
@@ -116,48 +129,18 @@ public:
 int main(void)
 {
 	MainMenu* menu = new MainMenu();
-	menu->printText();
-
-	return 0;
-}
-
-
-
-
-
-
-
-
-/*
-int main(void)
-{
-
-	bool alive = true;
-	int action;
-
-	//using struct to contain like variables
-	//const because they shouldn't be altered
-	struct
-	{
-		const std::string monday = "Monday";
-		const std::string tuesday = "Tuesday";
-		const std::string wednesday = "Wednesday";
-		const std::string thursday = "Thursday";
-		const std::string friday = "Friday";
-		const std::string saturday = "Saturday";
-		const std::string sunday = "Sunday";
-		
-	} days;
-
-	while(alive)
+	while (menu->alive)
 	{
 	
-		std::cout << "What would you like to do?" << std::endl;
-
-	
+		//menu->printText();
+		int selection = menu->printText();
+		menu->task_list(selection);
+		std::cin >> selection;
+		if (selection == 0)
+		{
+			menu->alive == false;
+			return 0;
+		}
 	}
-
 	return 0;
-
 }
-*/
